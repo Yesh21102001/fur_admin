@@ -191,7 +191,6 @@ const LoginSide = () => {
       return;
     }
 
-    // If validation passes, navigate to the dashboard
     navigate("/dashboard");
   };
 
@@ -216,112 +215,112 @@ const LoginSide = () => {
       >
         <Grid item xs={12} sm={6} md={4}>
           <CssBaseline />
-          <Grid
-            sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {!showForgotPassword ? (
-              <>
-                <Typography
-                  component="h1"
-                  variant="h5"
-                  sx={{ mb: 2, fontWeight: "bold", color: "#493628", fontFamily: "Lexend, serif" }}
-                >
-                  Login
-                </Typography>
-                <Grid
-                  component="form"
-                  noValidate
-                  onSubmit={handleSubmit}
-                  sx={{ mt: 1, width: "100%" }}
-                >
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    error={errors.email}
-                    sx={{ mb: 2, fontFamily: "Lexend, serif" }}
-                  />
-                  {errors.email && (
-                    <InputLabel htmlFor="email" error sx={{ fontFamily: "Lexend, serif" }}>
-                      Email is required
-                    </InputLabel>
-                  )}
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    error={errors.password}
-                    sx={{ mb: 2, fontFamily: "Lexend, serif" }}
-                  />
-                  {errors.password && (
-                    <InputLabel htmlFor="password" error sx={{ fontFamily: "Lexend, serif" }}>
-                      Password is required
-                    </InputLabel>
-                  )}
-                  <Grid container justifyContent="left">
-                    <Grid item>
-                      <Link
-                        onClick={toggleForgotPassword}
-                        variant="body2"
-                        style={{ cursor: "pointer", textDecoration: "none", fontFamily: "Lexend, serif" }}
-                      >
-                        Forgot password?
-                      </Link>
-                    </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    style={{
-                      backgroundColor: "#493628",
-                      marginTop: "20px",
-                      fontSize: "16px",
-                      fontFamily: "Lexend, serif",
-                      fontWeight: "600",
-                      '&:hover': {
-                        backgroundColor: "#AB886D",
-                      }
-                    }}
+            <Grid
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {!showForgotPassword ? (
+                <>
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    sx={{ mb: 2, fontWeight: "bold", color: "#493628", fontFamily: "Lexend, serif" }}
                   >
                     Login
-                  </Button>
-                  <Box
-                    sx={{
-                      marginTop: "10px",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                    }}
+                  </Typography>
+                  <Grid
+                    component="form"
+                    noValidate
+                    onSubmit={handleSubmit}
+                    sx={{ mt: 1, width: "100%" }}
                   >
-                    <Typography sx={{ fontFamily: "Lexend, serif" }}>
-                      Don't have an Account?{" "}
-                      <Link onClick={handleSignUp} style={{ cursor: "pointer", textDecoration: "none" }}>
-                        SignUp
-                      </Link>
-                    </Typography>
-                  </Box>
-                </Grid>
-              </>
-            ) : (
-              <ForgotPasswordForm onCancel={toggleForgotPassword} />
-            )}
-          </Grid>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      error={errors.email}
+                      sx={{ mb: 2, fontFamily: "Lexend, serif" }}
+                    />
+                    {errors.email && (
+                      <InputLabel htmlFor="email" error sx={{ fontFamily: "Lexend, serif" }}>
+                        Email is required
+                      </InputLabel>
+                    )}
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      error={errors.password}
+                      sx={{ mb: 2, fontFamily: "Lexend, serif" }}
+                    />
+                    {errors.password && (
+                      <InputLabel htmlFor="password" error sx={{ fontFamily: "Lexend, serif" }}>
+                        Password is required
+                      </InputLabel>
+                    )}
+                    <Grid container justifyContent="left">
+                      <Grid item>
+                        <Link
+                          onClick={toggleForgotPassword}
+                          variant="body2"
+                          style={{ cursor: "pointer", textDecoration: "none", fontFamily: "Lexend, serif" }}
+                        >
+                          Forgot password?
+                        </Link>
+                      </Grid>
+                    </Grid>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      fullWidth
+                      style={{
+                        backgroundColor: "#493628",
+                        marginTop: "20px",
+                        fontSize: "16px",
+                        fontFamily: "Lexend, serif",
+                        fontWeight: "600",
+                        '&:hover': {
+                          backgroundColor: "#AB886D",
+                        }
+                      }}
+                    >
+                      Login
+                    </Button>
+                    <Box
+                      sx={{
+                        marginTop: "10px",
+                        display: "flex",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <Typography sx={{ fontFamily: "Lexend, serif" }}>
+                        Don't have an Account?{" "}
+                        <Link onClick={handleSignUp} style={{ cursor: "pointer", textDecoration: "none" }}>
+                          SignUp
+                        </Link>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </>
+              ) : (
+                <ForgotPasswordForm onCancel={toggleForgotPassword} />
+              )}
+            </Grid>
         </Grid>
       </Grid>
     </ThemeProvider>

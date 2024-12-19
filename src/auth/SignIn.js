@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,39 +11,63 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const SignUp = () => {
-  const [errors, setErrors] = React.useState({ email: false, password: false });
+  const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    const email = data.get("email");
-    const password = data.get("password");
-
-    // Clear errors
+    const firstname = data.get("firstname").trim();
+    const lastname = data.get("lastname").trim();
+    const email = data.get("email").trim();
+    const password = data.get("password").trim();
+  
     clearErrors();
-
-    // Validate email
-    if (!email || !email.trim()) {
-      setErrors((prevErrors) => ({ ...prevErrors, email: true }));
+  
+    const validationErrors = {};
+    if (!firstname) validationErrors.firstname = true;
+    if (!lastname) validationErrors.lastname = true;
+    if (!email) validationErrors.email = true;
+    if (!password) validationErrors.password = true;
+  
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
-
-    // Validate password
-    if (!password || !password.trim()) {
-      setErrors((prevErrors) => ({ ...prevErrors, password: true }));
-      return;
+  
+    try {
+      console.log("Sending data:", { firstname, lastname, email, password });
+  
+      const response = await fetch("http://localhost:3000/api/signup/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ firstname, lastname, email, password }),
+      });
+  
+      const result = await response.json();
+      console.log("Response received:", result);
+  
+      if (response.ok) {
+        setSuccessMessage(result.message);
+        setErrorMessage("");
+      } else {
+        setErrorMessage(result.message || "Signup failed. Please try again.");
+        setSuccessMessage("");
+      }
+    } catch (error) {
+      console.error("Fetch Error:", error);
+      setErrorMessage("An error occurred. Please try again.");
+      setSuccessMessage("");
     }
-
-    // Add your logic for form submission here
-    console.log({ email, password });
   };
 
   const clearErrors = () => {
-    setErrors({
-      email: false,
-      password: false,
-    });
+    setErrors({});
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   return (
@@ -57,7 +81,6 @@ const SignUp = () => {
     >
       <Grid container component="main">
         <CssBaseline />
-
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -75,29 +98,31 @@ const SignUp = () => {
             </Typography>
             <Box
               component="form"
-              noValidate
               onSubmit={handleSubmit}
+              noValidate
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     autoComplete="given-name"
-                    name="firstName"
+                    name="firstname"
                     required
                     fullWidth
-                    id="firstName"
+                    id="firstname"
                     label="First Name"
+                    error={errors.firstname}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
-                    id="lastName"
+                    id="lastname"
                     label="Last Name"
-                    name="lastName"
+                    name="lastname"
                     autoComplete="family-name"
+                    error={errors.lastname}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -124,6 +149,16 @@ const SignUp = () => {
                   />
                 </Grid>
               </Grid>
+              {errorMessage && (
+                <Typography color="error" sx={{ mt: 2 }}>
+                  {errorMessage}
+                </Typography>
+              )}
+              {successMessage && (
+                <Typography color="success" sx={{ mt: 2 }}>
+                  {successMessage}
+                </Typography>
+              )}
               <Button
                 type="submit"
                 variant="contained"
@@ -136,19 +171,28 @@ const SignUp = () => {
                   fontWeight: "700",
                   fontSize: "18px",
                   "&:hover": {
-                    backgroundColor: "#362a20", // Set your desired hover color
+                    backgroundColor: "#362a20",
                   },
                 }}
               >
                 Sign Up
               </Button>
-
               <Grid container justifyContent="flex-start">
                 <Grid item>
-                  <Typography>Already have an account? <Link to="/" variant="body2" sx={{ display: "flex", justifyContent: "flex-start", teaxtDecoration: "none" }}>
-                    Sign in
-                  </Link></Typography>
-
+                  <Typography>
+                    Already have an account?{" "}
+                    <Link
+                      to="/"
+                      variant="body2"
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        textDecoration: "none",
+                      }}
+                    >
+                      Sign in
+                    </Link>
+                  </Typography>
                 </Grid>
               </Grid>
             </Box>
