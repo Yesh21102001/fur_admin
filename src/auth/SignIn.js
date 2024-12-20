@@ -18,16 +18,16 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const firstname = data.get("firstname").trim();
-    const lastname = data.get("lastname").trim();
+    const firstName = data.get("firstName").trim();
+    const lastName = data.get("lastName").trim();
     const email = data.get("email").trim();
     const password = data.get("password").trim();
   
     clearErrors();
   
     const validationErrors = {};
-    if (!firstname) validationErrors.firstname = true;
-    if (!lastname) validationErrors.lastname = true;
+    if (!firstName) validationErrors.firstName = true;
+    if (!lastName) validationErrors.lastName = true;
     if (!email) validationErrors.email = true;
     if (!password) validationErrors.password = true;
   
@@ -37,14 +37,14 @@ const SignUp = () => {
     }
   
     try {
-      console.log("Sending data:", { firstname, lastname, email, password });
+      console.log("Sending data:", { firstName, lastName, email, password });
   
-      const response = await fetch("http://localhost:3000/api/signup/signup", {
+      const response = await fetch("http://localhost:3000/api/authentication/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ firstname, lastname, email, password }),
+        body: JSON.stringify({ firstName, lastName, email, password }),
       });
   
       const result = await response.json();
@@ -106,23 +106,23 @@ const SignUp = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     autoComplete="given-name"
-                    name="firstname"
+                    name="firstName"
                     required
                     fullWidth
-                    id="firstname"
+                    id="firstName"
                     label="First Name"
-                    error={errors.firstname}
+                    error={errors.firstName}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
                     fullWidth
-                    id="lastname"
+                    id="lastName"
                     label="Last Name"
-                    name="lastname"
+                    name="lastName"
                     autoComplete="family-name"
-                    error={errors.lastname}
+                    error={errors.lastName}
                   />
                 </Grid>
                 <Grid item xs={12}>

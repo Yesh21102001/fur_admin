@@ -27,21 +27,18 @@ function Category() {
             });
     }, []);
 
-    // Navigate to add category page
     const handleAddCategory = () => {
         navigate('/addcategory');
     };
 
-    // Navigate to edit category page
     const handleEditCategory = (id) => {
         navigate(`/updatecategory/${id}`);
     };
 
-    // Delete category from server
     const handleDeleteCategory = async (id) => {
         try {
             await axios.delete(`http://localhost:3000/api/categories/${id}`);
-            setCategories(categories.filter(category => category.id !== id)); // Update local state after deletion
+            setCategories(categories.filter(category => category.id !== id)); 
         } catch (error) {
             console.error("Error deleting category:", error);
             alert("Failed to delete category");
@@ -130,6 +127,7 @@ function Category() {
                                     </Typography>
                                 )}
                             </Box>
+
                             <Box sx={{ marginRight: "20px" }}>
                                 <Typography variant="h4" sx={{ fontWeight: "500", marginTop: "10px", fontFamily: "Lexend, serif", fontSize: "25px" }}>
                                     {category.name}
