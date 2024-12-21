@@ -46,7 +46,7 @@ function AddCategory() {
         Add Category
       </Typography>
 
-      <form onSubmit={handleAddSubmit}>  {/* Use form's onSubmit */}
+      <form onSubmit={handleAddSubmit}>  
         <Grid container spacing={2} sx={{ marginTop: "50px" }}>
           {/* Category Name Field */}
           <Grid item xs={4}>

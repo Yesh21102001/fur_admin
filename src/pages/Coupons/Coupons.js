@@ -16,7 +16,7 @@ const Coupons = () => {
                 if (Array.isArray(response.data.data)) {
                     setCoupons(response.data.data);
                 } else {
-                    setCoupons([]);  
+                    setCoupons([]);
                 }
                 setLoading(false);
             })
@@ -38,7 +38,7 @@ const Coupons = () => {
     const handleDeleteCoupon = async (id) => {
         try {
             await fetch(`/api/coupons/${id}`, { method: "DELETE" });
-            setCoupons((prev) => prev.filter((coupon) => coupon.id !== id));
+            setCoupons((prev) => prev.filter((coupon) => coupon.CouponID !== id));
         } catch (error) {
             console.error("Error deleting coupon:", error);
         }
@@ -97,7 +97,7 @@ const Coupons = () => {
                 {coupons.length > 0 ? (
                     coupons.map((coupons) => (
                         <Box
-                            key={coupons.CouponId}
+                            key={coupons.CouponID}
                             sx={{
                                 height: "300px",
                                 width: "380px",
@@ -123,21 +123,21 @@ const Coupons = () => {
                                 {coupons.CouponName}
                             </Typography>
                             <Box>
-                                <Typography>ID: {coupons.CouponId}</Typography>
+                                <Typography>ID: {coupons.CouponID}</Typography>
                                 <Typography>Coupon Code: {coupons.CouponCode}</Typography>
-                                <Typography>Offer Amount: {coupons.offerAmount}</Typography>
+                                <Typography>Offer Amount: {coupons.OfferAmount}</Typography>
                                 <Typography>Discount Percentage: {coupons.Discount}%</Typography>
-                                <Typography>Offer Available: {coupons.OfferAvailable}</Typography>
-                                <Typography>Expiry Date: {coupons.ExpiryDate}</Typography>
+                                <Typography>Offer Available: {new Date(coupons.OfferAvailable).toLocaleDateString()}</Typography>
+                                <Typography>Expiry Date: {new Date(coupons.ExpiryDate).toLocaleDateString()}</Typography>
                             </Box>
                             <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
                                 <MdEdit
-                                    sx={{ height: "30px", width: "30px", cursor: "pointer" }}
-                                    onClick={() => handleEditCoupon(coupons.CouponId)}
+                                    style={{ height: "30px", width: "30px", cursor: "pointer" }}
+                                    onClick={() => handleEditCoupon(coupons.CouponID)}
                                 />
                                 <MdDelete
-                                    sx={{ height: "30px", width: "30px", cursor: "pointer" }}
-                                    onClick={() => handleDeleteCoupon(coupons.CouponId)}
+                                    style={{ height: "30px", width: "30px", cursor: "pointer" }}
+                                    onClick={() => handleDeleteCoupon(coupons.CouponID)}
                                 />
                             </Box>
                         </Box>
